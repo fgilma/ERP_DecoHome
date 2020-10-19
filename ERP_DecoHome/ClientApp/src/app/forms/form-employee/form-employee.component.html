@@ -1,0 +1,130 @@
+<div class="container">
+    <div class="row pb-1">
+        <div class="col">
+            <form (ngSubmit)="saveEmployee()" [formGroup]="employeeForm">
+                <div class="card">
+                    <div class="card-header" style="background:#4b5366; color: #fff;">
+                        <h2>{{title}} <b> empleado</b></h2>
+                    </div>
+                    <div class="card-body pb-1">
+                        <div class="row">
+                            <div class="col-2">
+                                <img src="assets/images/avatar.png" width="150" height="190" />
+                            </div>
+                            <div class="col">
+                                <div class="form-row">
+                                    <div class="form-group col">
+                                        <label for="name">Nombre</label>
+                                        <input type="text" class="form-control" formControlName="name" id="name" placeholder="">
+                                        <div *ngIf="employeeForm.controls['name'].invalid && (employeeForm.controls['name'].dirty || employeeForm.controls['name'].touched)">
+                                            <span *ngIf="employeeForm.controls['name'].errors.required" style="color:red">
+                                                   <small> El nombre del empleado es necesario.</small>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col">
+                                        <label for="surname1">Primer Apellido</label>
+                                        <input type="text" class="form-control" id="surname1" formControlName="surname1" placeholder="">
+                                        <div *ngIf="employeeForm.controls['surname1'].invalid && (employeeForm.controls['surname1'].dirty || employeeForm.controls['surname1'].touched)">
+                                            <span *ngIf="employeeForm.controls['surname1'].errors.required" style="color:red">
+                                                   <small> El apellido del empleado es necesario.</small>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col">
+                                        <label for="surname2">Segundo Apellido</label>
+                                        <input type="text" class="form-control" id="surname2" formControlName="surname2" placeholder=" ">
+                                        <div *ngIf="employeeForm.controls['surname2'].invalid && (employeeForm.controls['surname2'].dirty || employeeForm.controls['surname2'].touched)">
+                                            <span *ngIf="employeeForm.controls['surname2'].errors.required" style="color:red">
+                                                   <small> El apellido del empleado es necesario.</small>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="email ">Email</label>
+                                        <input type="email " class="form-control " id="email" formControlName="email" placeholder=" ">
+                                        <div *ngIf="employeeForm.controls['email'].invalid && (employeeForm.controls['email'].dirty || employeeForm.controls['email'].touched)">
+                                            <span *ngIf="employeeForm.controls['email'].errors.required" style="color:red">
+                                                   <small> El email es necesario.</small>
+                                                </span>
+                                            <span *ngIf="employeeForm.controls['email'].errors.pattern" style="color:red">
+                                                <small>Email no válido.</small>                                                
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf='isNew' class="form-group col">
+                                        <label for="password">Password</label>
+                                        <input type="text" class="form-control " id="password" formControlName="password" placeholder="Ex: Nombre100# ">
+                                        <div *ngIf="employeeForm.controls['password'].invalid && (employeeForm.controls['password'].dirty || employeeForm.controls['password'].touched)">
+                                            <span *ngIf="employeeForm.controls['password'].errors.required" style="color:red">
+                                                   <small> El password es necesario.</small>
+                                                </span>
+                                            <span *ngIf="employeeForm.controls['password'].errors.pattern" style="color:red">
+                                                <small>Password no válido.</small>                                                
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf='isNew' class="form-group col">
+                                        <label for="rol ">Perfil</label>
+                                        <select class="form-control" id="rol" formControlName="rol">
+                                            <option value="Administrador" >Administrador</option>
+                                            <option value="Usuario" >Usuario</option>
+                                        </select>
+                                        <div *ngIf="employeeForm.controls['rol'].invalid && (employeeForm.controls['rol'].dirty || employeeForm.controls['rol'].touched)">
+                                            <span *ngIf="employeeForm.controls['rol'].errors.required" style="color:red">
+                                                   <small> El perfil del empleado es necesario.</small>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div *ngIf='!isNew' class="form-group col-md-4 offset-2">
+                                        <label for="rol ">Perfil</label>
+                                        <select class="form-control" id="rol" formControlName="rol">
+                                            <option value="Administrador" >Administrador</option>
+                                            <option value="Usuario" >Usuario</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-row ">
+                                    <div class="form-group col-md-3 ">
+                                        <label for="position ">Cargo</label>
+                                        <input type="text " class="form-control " id="position" formControlName="position" placeholder=" ">
+                                        <div *ngIf="employeeForm.controls['position'].invalid && (employeeForm.controls['position'].dirty || employeeForm.controls['position'].touched)">
+                                            <span *ngIf="employeeForm.controls['position'].errors.required" style="color:red">
+                                                   <small> El cargo del empleado es necesario.</small>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label for="department ">Departamento</label>
+                                        <input type="email " class="form-control " id="department" formControlName="department" placeholder=" ">
+                                        <div *ngIf="employeeForm.controls['department'].invalid && (employeeForm.controls['department'].dirty || employeeForm.controls['department'].touched)">
+                                            <span *ngIf="employeeForm.controls['department'].errors.required" style="color:red">
+                                                   <small> El departamento es necesario.</small>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-4 offset-2">
+                                        <label for="salary ">Sueldo</label>
+                                        <input type="text " class="form-control " id="salary" formControlName="salary" placeholder=" ">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row mb-2 mt-2 ">
+                    <div class="col ">
+                        <button class="btn btn-light mr-3 " style="width:80px; " type="submit " [disabled]="employeeForm.invalid">
+                        Save</button>
+
+                        <button class="btn btn-outline-secondary mr-3 " style="width:80px; " type="button " title="Cancel your edits " [routerLink]="[ '/employees'] ">
+                        Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,8 @@
+using System;
+using System.Text;
+using ERP_DecoHome.Data;
 using ERP_DecoHome.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -8,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
+using Microsoft.IdentityModel.Tokens;
 
 namespace ERP_DecoHome
 {
@@ -30,14 +34,46 @@ namespace ERP_DecoHome
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            // Add identity and roles from EF Core Identity
+            // Repositories
+            services.AddScoped<StateRepository>();
+            services.AddScoped<PriorityRepository>();
+            services.AddScoped<CategoryRepository>();
+            services.AddScoped<ProductRepository>();
+            services.AddScoped<CustomerRepository>();
+            services.AddScoped<DetailedOrderRepository>();
+            services.AddScoped<OrderRepository>();
+
+
+            // to avoid loops in json data
+            services.AddControllers()
+                    .AddNewtonsoftJson(x =>
+                        x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+
+            // Add identity and roles from EF Core Identity and token providers
             services.AddIdentity<Employee, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                    .AddEntityFrameworkStores<ApplicationDbContext>()
+                    .AddDefaultTokenProviders();
+
+            // set authentication
+              services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                 options.TokenValidationParameters = new TokenValidationParameters
+                 {
+                     ValidateIssuer = true,
+                     ValidateAudience = true,
+                     ValidateLifetime = true,
+                     ValidateIssuerSigningKey = true,
+                     ValidIssuer = "yourdomain.com",
+                     ValidAudience = "yourdomain.com",
+                     IssuerSigningKey = new SymmetricSecurityKey(
+                                        Encoding.UTF8.GetBytes(Configuration["Jwt:key_secret"])),
+                     ClockSkew = TimeSpan.Zero
+                 });
 
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                configuration.RootPath = "ClientApp/dist/ClientApp";
             });
         }
 
@@ -57,12 +93,20 @@ namespace ERP_DecoHome
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            // Add authentication
+            app.UseAuthentication();
+
             if (!env.IsDevelopment())
             {
                 app.UseSpaStaticFiles();
             }
 
             app.UseRouting();
+
+            // Add authorization
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

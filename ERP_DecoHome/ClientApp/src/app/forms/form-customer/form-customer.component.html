@@ -1,0 +1,91 @@
+<div class="container">
+    <div class="row pb-1">
+        <div class="col">
+            <form (ngSubmit)="saveCustomer()" [formGroup]="customerForm">
+                <div class="card">
+                    <div class="card-header" style="background:#4b5366; color: #fff;">
+                        <h2>{{title}} <b> cliente</b></h2>
+                    </div>
+                    <div class="card-body pb-1">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="name">Nombre cliente</label>
+                                <input type="text" class="form-control" id="name" formControlName="name" placeholder="">
+                                <div *ngIf="customerForm.controls['name'].invalid && (customerForm.controls['name'].dirty || customerForm.controls['name'].touched)">
+                                    <span *ngIf="customerForm.controls['name'].errors.required" style="color:red">
+                                           <small> El nombre del cliente es necesario.</small>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="dni">DNI/NIF</label>
+                                <input type="text" class="form-control" id="dni" formControlName="dni" placeholder="">
+                                <div *ngIf="customerForm.controls['dni'].invalid && (customerForm.controls['dni'].dirty || customerForm.controls['dni'].touched)">
+                                    <span *ngIf="customerForm.controls['dni'].errors.required" style="color:red">
+                                           <small> El DNI del cliente es necesario.</small>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-3">
+                                <label for="phone">Teléfono</label>
+                                <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="">
+                            </div>
+                            <div class="form-group col-md-6 offset-3">
+                                <label for="emailCustomer">E-mail</label>
+                                <input type="email" class="form-control" id="emailCustomer" formControlName="emailCustomer">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="address">Dirección</label>
+                                <input type="text" class="form-control" id="address" placeholder="" formControlName="address">
+                            </div>
+                            <div class="form-group col">
+                                <label for="number">Número</label>
+                                <input type="text" class="form-control" id="number" placeholder="" formControlName="number">
+                            </div>
+                            <div class="form-group col">
+                                <label for="flat">Piso</label>
+                                <input type="text" class="form-control" id="flat" placeholder="" formControlName="flat">
+                            </div>
+                            <div class="form-group col">
+                                <label for="door">Puerta</label>
+                                <input type="text" class="form-control" id="door" placeholder="" formControlName="door">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4">
+                                <label for="city">Localidad</label>
+                                <input type="text" class="form-control" id="city" placeholder="" formControlName="city">
+                            </div>
+                            <div class="form-group col">
+                                <label for="region">Provincia</label>
+                                <input type="text" class="form-control" id="region" placeholder="" formControlName="region">
+                            </div>
+                            <div class="form-group col">
+                                <label for="country">País</label>
+                                <input type="text" class="form-control" id="country" placeholder="" formControlName="country">
+                            </div>
+                            <div class="form-group col">
+                                <label for="zip">C.P.</label>
+                                <input type="text" class="form-control" id="zip" placeholder="" formControlName="zip">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row mt-2">
+                    <div class="col-md-4">
+                        <button class="btn btn-light mr-3" style="width:80px;" type="submit" [disabled]="customerForm.invalid">
+                        Save
+                        </button>
+                        <button class="btn btn-outline-secondary mr-3" style="width:80px;" type="button" title="Cancel your edits" [routerLink]="['/customers']">
+                        Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<div class="container">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <div class="table-title">
+                <div class="row">
+                    <h2>Lista de <b>productos</b></h2>
+                    <a class="btn btn-light ml-auto" (click)=createProduct()><i class="fa fa-file" aria-hidden="true"></i>  Crear</a>
+                </div>
+            </div>
+        </div>
+        <!-- search by category -->
+        <div class="table-filter">
+            <div class="col-md-8">
+                <input type="search" [(ngModel)]="listFilter" placeholder=" &#xF002;  Por categoría" style="font-family:Arial, FontAwesome" />
+            </div>
+        </div>
+        <!-- products table -->
+        <table class="table table-striped table-hover table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Categoría</th>
+                    <th class="text-right" scope="col">Stock</th>
+                    <th class="text-right" scope="col">Coste</th>
+                    <th class="text-right" scope="col">PVP</th>
+                    <th class="text-right" scope="col">PVP
+                        <span class="small">(+IVA)</span>
+                    </th>
+                    <th class="text-right" scope="col" style="width:10px">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let product of filteredProducts | productTableFilter: category| paginate: {itemsPerPage: 5, currentPage: p};let i = index'>
+
+                    <td><strong> {{ 5* (+p - 1) + i + 1 }}</strong></td>
+                    <td>DHP-{{product.id}}</td>
+                    <td>{{product.name}}</td>
+                    <td>{{product.category.name}}</td>
+                    <td class="text-right" [ngStyle]="{'color': getColor(product.amount)}">{{product.amount}}</td>
+                    <td class="text-right">{{product.cost| number:'1.2-2'}} €</td>
+                    <td class="text-right">{{product.unitPvp| number:'1.2-2'}} €</td>
+                    <td class="text-right">{{product.unitPvpIva| number:'1.2-2'}} €</td>
+                    <td>
+                        <a [routerLink]="['/editProduct', product.id]"><i class="fa fa-pencil ml-2 mr-2" style="color:#4CAF50" data-toggle="tooltip" data-placement="bottom" title="Editar producto DHP-{{product.id}}"></i></a>
+                        <a [routerLink]="" (click)=deleteProduct(product.id)><i class="fa fa-trash" style="color:red" data-toggle="tooltip" data-placement="bottom" title="Borrar producto DHP-{{product.id}}"></i></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+    <pagination-controls class="pagination justify-content-center" (pageChange)="p = $event"></pagination-controls>
+</div>

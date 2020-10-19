@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using ERP_DecoHome.Data;
 
 namespace ERP_DecoHome.Models
 {
-    public class Customer
+    public class Customer: IEntity
     {
         [Key]       
         public int Id { get; set; }

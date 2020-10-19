@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row pb-1">
+        <div class="col">
+            <div class="card">
+                <div class="card-header" style="background:#4b5366; color: #fff;">
+                    <h2>Estadísticas</h2>
+                </div>
+                <div class="row ml-5">
+                    <!-- orders by day bar vertical -->
+                    <div class="col">
+                        <div class="row  mt-2">
+                            <h4>Ventas últimos 7 días</h4>
+                        </div>
+                        <div class="row">
+                            <ngx-charts-bar-vertical [view]="[1000,400]" [scheme]="colorScheme" [results]="ordersByDay" [gradient]=true [xAxis]=true [yAxis]=true [legend]=false [showXAxisLabel]=true [showYAxisLabel]=true [xAxisLabel]="'Días'" [yAxisLabel]="'Euros'">
+                            </ngx-charts-bar-vertical>
+                        </div>
+                    </div>
+                    <!-- customers pie -->
+                    <div class="col">
+                        <div class="row mt-2">
+                            <h4>Principales clientes</h4>
+                        </div>
+                        <div class="row">
+                            <ngx-charts-advanced-pie-chart [view]="[1000,400]" [scheme]="colorScheme" [results]="ordersByCustomer" [gradient]="true">
+                            </ngx-charts-advanced-pie-chart>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ml-5">
+                    <!-- products bar vertical -->
+                    <div class="col">
+                        <div class="row mt-2">
+                            <h4>Productos más vendidos</h4>
+                        </div>
+                        <div class="row">
+                            <ngx-charts-bar-vertical [view]="[1000,400]" [scheme]="colorScheme" [results]="BestSellingProducts" [xAxisLabel]="'Productos'" [legendTitle]="'Product Sale Chart'" [yAxisLabel]="'Euros'" [legend]="false" [legendPosition]="'right'" [showXAxisLabel]="true"
+                                [showYAxisLabel]="true" [xAxis]="true" [yAxis]="true" [gradient]="true">
+                            </ngx-charts-bar-vertical>
+                        </div>
+                    </div>
+                    <!-- employees pie -->
+                    <div class="col">
+                        <div class="row mt-2">
+                            <h4>Ventas por empleados</h4>
+                        </div>
+                        <div class="row">
+                            <ngx-charts-pie-chart [view]="[1000,400]" [scheme]="colorScheme" [results]="ordersByEmployee" [legend]="true" [legendTitle]="'Empleados'" [labels]="false">
+                            </ngx-charts-pie-chart>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

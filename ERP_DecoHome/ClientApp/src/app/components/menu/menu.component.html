@@ -1,0 +1,43 @@
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 py-0">
+        <div class="container">
+            <a class="navbar-brand"><img src="assets/images/DecoHomeLogoShort.png" alt="" width="70" height="40"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex" [ngClass]="{ show: isExpanded }">
+                <ul class="navbar-nav flex-grow">
+                    <li class="nav-item py-0" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']">
+                        <a class="nav-link text-dark" [routerLink]="['/home']">Home</a>
+                    </li>
+                    <li class="nav-item py-0" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
+                        <a class="nav-link text-dark" [routerLink]="['/orders']">Pedidos</a>
+                    </li>
+                    <li class="nav-item py-0" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']">
+                        <a class="nav-link text-dark" [routerLink]="['/products']">Productos</a>
+                    </li>
+                    <li class="nav-item py-0" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']">
+                        <a class="nav-link text-dark" [routerLink]="['/customers']">Clientes</a>
+                    </li>
+                    <li class="nav-item py-0" *ngIf="isLoggedIn()" [routerLinkActive]="['link-active']">
+                        <a class="nav-link text-dark" [routerLink]="['/employees']">Empleados</a>
+                    </li>
+                    <li class="nav-item py-0" *ngIf="isLoggedIn() && isAdmin()" [routerLinkActive]="['link-active']">
+                        <a class="nav-link text-dark" [routerLink]="['/statistics']">Estadísticas</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav flex-grow ml-auto">
+                    <li class="nav-item py-0" *ngIf="isLoggedIn()">
+                        <a class="nav-link text-dark"> <i class="fa fa-user" aria-hidden="true" style="color: #4b5366"></i> {{getUser()}}</a>
+                    </li>
+                    <li class="nav-item py-0" *ngIf="!isLoggedIn()" [routerLinkActive]='["link-active"]'>
+                        <a class="nav-link text-dark" [routerLink]='["/login"]'><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a>
+                    </li>
+                    <li class="nav-item py-0" *ngIf="isLoggedIn()" [routerLinkActive]='["link-active"]'>
+                        <a class="nav-link text-dark" (click)='logout()' [routerLink]='["/login"]'> <i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

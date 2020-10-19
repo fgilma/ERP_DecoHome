@@ -1,0 +1,61 @@
+<div class="container">
+    <div class="row pb-1">
+        <div class="col">
+            <form (ngSubmit)="saveProduct()" [formGroup]="productForm">
+                <div class="card ">
+                    <div class="card-header" style="background:#4b5366; color: #fff;">
+                        <h2>{{title}} <b> producto</b></h2>
+                    </div>
+                    <div class="card-body pb-1">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="name">Nombre</label>
+                                <input type="text" name="" id="name" class="form-control" formControlName="name" placeholder="" aria-describedby="helpId">
+                            </div>
+                            <div class="form-group col-2">
+                                <label for="amount">Stock</label>
+                                <input type="text" name="" id="amount" class="form-control" formControlName="amount" placeholder="" aria-describedby="helpId">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-5">
+                                <label for="category">Categoría</label>
+                                <select class="form-control" id="category" formControlName="categoryId">
+                                    <option *ngFor='let item of categories' value="{{item.id}}">{{item.name}}</option>
+                                </select>
+                            </div>
+                            <div class="form-group offset-2 col-3">
+                                <label for="cost">Coste</label>
+                                <input type="text" name="" id="cost" class="form-control" formControlName="cost" placeholder="" aria-describedby="helpId">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group  col-2">
+                                <label for="unitPvp">PVP</label>
+                                <input type="text" name="" id="unitPvp" class="form-control" formControlName="unitPvp" placeholder="" aria-describedby="helpId">
+                            </div>
+                            <div class="form-group offset-3 col-2">
+                                <label for="iva">IVA<span class="small">(%)</span></label>
+                                <input type="text" name="" id="iva" class="form-control" formControlName="iva" placeholder="" aria-describedby="helpId" readonly>
+                            </div>
+                            <div class="form-group offset-3 col-2">
+                                <label for="unitPvpIva">PVP<span class="small">(+IVA)</span></label>
+                                <input type="text" name="" id="unitPvpIva" class="form-control" formControlName="unitPvpIva" placeholder="" aria-describedby="helpId">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row mb-2 mt-2">
+                    <div class="row md-3 ml-3">
+                        <button class="btn btn-light mr-3" style="width:80px;" type="submit">
+                        Save
+                        </button>
+                        <button class="btn btn-outline-secondary mr-2" style="width:80px;" type="button" title="Cancel your edits" [routerLink]="['/products']">
+                        Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

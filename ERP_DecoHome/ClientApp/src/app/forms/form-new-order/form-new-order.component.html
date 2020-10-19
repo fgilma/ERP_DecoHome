@@ -1,0 +1,128 @@
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <form (ngSubmit)="saveNewOrder()" [formGroup]="newOrderForm">
+                <div class="card">
+                    <div class="card-header" style="background:#4b5366; color: #fff;">
+                        <h2>Crear<b> pedido</b></h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="form row">
+                            <div class="form-group col-5 mb-1">
+                                <label for="customerId">Seleccione cliente:                                    
+                                </label>
+                                <select class="form-control" id="customerId" formControlName="customerId" required>
+                                    <option *ngFor='let item of customers' value="{{item.id}}">{{item.name}}</option>
+                                </select>
+                                <div *ngIf="newOrderForm.controls['customerId'].invalid && (newOrderForm.controls['customerId'].dirty || newOrderForm.controls['customerId'].touched)">
+                                    <span *ngIf="newOrderForm.controls['customerId'].errors.required" style="color:red">
+                                           <small> El cliente es necesario.</small>
+                                        </span>
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-group col-2 mb-1">
+                                <label for="stateId">Estado</label>
+                                <input type="text" class="form-control" id="stateId" placeholder="Pendiente" readonly>
+
+
+                            </div> -->
+                            <div class="form-group col-2 mb-1">
+                                <label for="priorityId">Prioridad</label>
+                                <select class="form-control" id="priorityId" formControlName="priorityId">
+                                        
+                                        <option *ngFor='let item of priorities' value="{{item.id}}">{{item.name}}</option>
+                                    </select>
+                                <!--<input type="password" class="form-control" id="inputPassword4">-->
+                            </div>
+
+                        </div>
+
+
+                        <br>
+                        <div class="form row">
+                            <button type="button" class="btn btn-outline-dark ml-3 " [disabled]="newOrderForm.invalid" (click)='controlTransport()'><i class="fa fa-truck fa-flip-horizontal" aria-hidden="true"></i>{{showTransport? ' Cerrar':' Ver'}} dirección</button>
+                        </div>
+
+                        <br>
+
+                        <div class="card" *ngIf='showTransport'>
+                            <div class="card-body pb-1">
+
+                                <div class="row mb-3">
+                                    <button type="button" class="btn btn-outline-dark mb-1 ml-auto " (click)='useCustomerAddres(idCustomer)'> <i class="fa fa-address-card" aria-hidden="true"></i> Usar dirección del cliente</button>
+                                </div>
+
+                                <div class="form-row">
+
+                                    <div class="form-group col">
+                                        <label for="address">Dirección</label>
+                                        <input type="text" class="form-control" id="address" placeholder="" formControlName="address">
+                                    </div>
+                                    <div class="form-group col-2">
+                                        <label for="number">Número</label>
+                                        <input type="text" class="form-control" id="number" placeholder="" formControlName="number">
+                                    </div>
+                                    <div class="form-group col-2">
+                                        <label for="flat">Piso</label>
+                                        <input type="text" class="form-control" id="flat" placeholder="" formControlName="flat">
+                                    </div>
+                                    <div class="form-group col-2">
+                                        <label for="door">Puerta</label>
+                                        <input type="text" class="form-control" id="door" placeholder="" formControlName="door">
+                                    </div>
+
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-4">
+                                        <label for="city">Localidad</label>
+                                        <input type="text" class="form-control" id="city" placeholder="" formControlName="city">
+                                    </div>
+                                    <div class="form-group col">
+                                        <label for="region">Provincia</label>
+                                        <input type="text" class="form-control" id="region" placeholder="" formControlName="region">
+                                    </div>
+                                    <div class="form-group col">
+                                        <label for="country">País</label>
+                                        <input type="text" class="form-control" id="country" placeholder="" formControlName="country">
+                                    </div>
+                                    <div class="form-group col">
+                                        <label for="zip">C.P.</label>
+                                        <input type="text" class="form-control" id="zip" placeholder="" formControlName="zip">
+                                    </div>
+                                </div>
+                                <!-- <div class="row">
+                                    <button type="button" class="btn btn-outline-dark ml-3 mb-1" (click)='useCustomerAddres(idCustomer)'> <i class="fa fa-address-card" aria-hidden="true"></i> Usar dirección del cliente</button>
+                                </div> -->
+
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group row mb-1 mt-2">
+                            <div class="col-md-4">
+                                <button class="btn btn-light mr-3" style="width:80px;background:#4b5366;color:white" type="submit" [disabled]="newOrderForm.invalid"> Save  </button>
+
+                                <button class="btn btn-outline-secondary mr-3" style="width:80px;" type="button" title="Cancel your edits" [routerLink]="['/orders']">
+                            Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+
+            <div class="row mt-2 ml-3" *ngIf='showButtonItems'>
+                <!-- <button type="button" [routerLink]="['/createItem', newId, '0']" class="btn btn-primary">crear items</button> -->
+                <!-- <button type="button" class="btn btn-primary">volver</button> -->
+                <a class="btn btn-light " (click)=newItems()><i class="fa fa-shopping-cart" aria-hidden="true"></i>  Comprar</a>
+
+                <a class="btn btn-light ml-2" id="botonVolver" (click)=onBack()><i class="fa fa-undo" aria-hidden="true"></i>  Volver</a>
+            </div>
+
+        </div>
+    </div>
+</div>

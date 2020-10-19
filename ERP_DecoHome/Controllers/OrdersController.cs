@@ -6,104 +6,120 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ERP_DecoHome.Models;
+using System.Collections;
+using ERP_DecoHome.Data;
 
 namespace ERP_DecoHome.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OrdersController : ControllerBase
+    public class OrdersController : GenericController<Order, OrderRepository>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly OrderRepository _repository;
 
-        public OrdersController(ApplicationDbContext context)
+        public OrdersController(OrderRepository repository) : base(repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
-        // GET: api/Orders
+        // GET: api/Orders/GetOrders
+        [HttpGet("GetOrders")]
+        public ActionResult<IEnumerable<Order>> GetOrders()
+        {
+            var result = _repository.GetOrders(); //include customer, employee
+            return Ok(result);
+        }
+
+
+        // GET: api/Orders/GetOrders/5
+        [HttpGet("GetOrders/{id}")]
+        public ActionResult<Order> GetOrders(int id)
+        {
+            var result = _repository.GetOrders(id); //include customer, employee
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
+        }
+
+        // DELETE: api/DeleteOrderItems/5
+        [Route("[action]/{id}")]
+        [HttpDelete]
+        public ActionResult<Order> DeleteOrderItems(int id)
+        {
+            var result = _repository.DeleteOrderItems(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+
+        [Route("[action]/{id}")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
+        public ActionResult<IEnumerable<Order>> GetOrderByCustomer(string id)
         {
-            return await _context.Orders.ToListAsync();
-        }
-
-        // GET: api/Orders/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Order>> GetOrder(int id)
-        {
-            var order = await _context.Orders.FindAsync(id);
-
-            if (order == null)
+            var result = _repository.GetOrderByCustomer(id);
+            if (result == null)
             {
                 return NotFound();
             }
 
-            return order;
+            return Ok(result);
         }
 
-        // PUT: api/Orders/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder(int id, Order order)
+        // Group sales by days
+        [Route("[action]")]
+        [HttpGet]
+        public ActionResult<IEnumerable> SalesByDay()
         {
-            if (id != order.Id)
+            var result = _repository.SalesByDay();
+            if (result == null)
             {
-                return BadRequest();
+                return NotFound();
             }
-
-            _context.Entry(order).State = EntityState.Modified;
-
-            try
+            return Ok(result);
+        }
+        // Group sales by customers
+        [Route("[action]")]
+        [HttpGet]
+        public ActionResult<IEnumerable> SalesByCustomer()
+        {
+            var result = _repository.SalesByCustomer();
+            if (result == null)
             {
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(result);
         }
 
-        // POST: api/Orders
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
-        [HttpPost]
-        public async Task<ActionResult<Order>> PostOrder(Order order)
+        // sales by customer id
+        [Route("[action]/{id}")]
+        [HttpGet]
+        public ActionResult<IEnumerable> SalesByCustomerId(int id)
         {
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetOrder", new { id = order.Id }, order);
-        }
-
-        // DELETE: api/Orders/5
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Order>> DeleteOrder(int id)
-        {
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
+            var result = _repository.SalesByCustomerId(id);
+            if (result == null)
             {
                 return NotFound();
             }
 
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-
-            return order;
+            return Ok(result);
         }
-
-        private bool OrderExists(int id)
+        // Group sales by employees
+        [Route("[action]")]
+        [HttpGet]
+        public ActionResult<IEnumerable> SalesByEmployee()
         {
-            return _context.Orders.Any(e => e.Id == id);
+            var result = _repository.SalesByEmployee();
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
     }
 }

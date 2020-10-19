@@ -1,0 +1,111 @@
+<div class="container">
+    <div class="table-responsive">
+        <div class="table-wrapper">
+            <!-- title: employee name -->
+            <div class="table-title">
+                <div class="row">
+                    <h2>Pedidos de <b>{{employee.name}} {{employee.surname1}}</b></h2>
+                    <a class="btn btn-light ml-auto" (click)=controlEmployee()><i class="fa fa-address-card" aria-hidden="true"></i>{{showData2? ' Cerrar':' Ver'}} empleado</a>
+                    <a class="btn btn-light ml-2" id="botonVolver" (click)=onBack()><i class="fa fa-undo" aria-hidden="true"></i>  Volver</a>
+                </div>
+            </div>
+        </div>
+        <!-- employee data -->
+        <div class="card" *ngIf='showData2'>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-2">
+                        <img src="assets/images/avatar.png" width="150" height="190" />
+                    </div>
+                    <div class="col">
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <label for="name">Nombre</label>
+                                <input type="text" class="form-control" id="name" readonly placeholder="{{employee.name}}">
+                            </div>
+                            <div class="form-group col">
+                                <label for="surname1">Primer Apellido</label>
+                                <input type="text" class="form-control" id="surname1" readonly placeholder="{{employee.surname1}}">
+                            </div>
+                            <div class="form-group col">
+                                <label for="surname2">Segundo Apellido</label>
+                                <input type="text" class="form-control" id="surname2" readonly placeholder="{{employee.surname2}} ">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="email ">Email</label>
+                                <input type="email " class="form-control " id="email" readonly placeholder="{{employee.email}} ">
+                            </div>
+                            <div class="form-group col-md-4 offset-2 ">
+                                <label for="rol ">Perfil</label>
+                                <input type="text " class="form-control " id="rol" readonly placeholder=" {{employee.rol}}">
+                            </div>
+                        </div>
+
+                        <div class="form-row ">
+                            <div class="form-group col-md-3 ">
+                                <label for="position ">Cargo</label>
+                                <input type="text " class="form-control " id="position" readonly placeholder="{{employee.position}} ">
+                            </div>
+                            <div class="form-group col-md-3">
+                                <label for="department ">Departamento</label>
+                                <input type="email " class="form-control " id="department" readonly placeholder="{{employee.department}} ">
+                            </div>
+                            <div class="form-group col-md-4 offset-2" *ngIf='isAdmin()'>
+                                <label for="salary ">Sueldo</label>
+                                <input type="text " class="form-control " id="salary" readonly placeholder="{{employee.salary}} ">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- search by state -->
+        <div class="table-filter">
+            <div class="col-md-8">
+                <input type="search" [(ngModel)]="state" placeholder="&#xF002;  Por estado" style="font-family:Arial, FontAwesome" />
+            </div>
+        </div>
+        <!-- orders employee table -->
+        <table class="table table-hover table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Código</th>
+                    <th scope="col">Inicio</th>
+                    <th scope="col">Asignación</th>
+                    <th scope="col">Entrega</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Prioridad</th>
+                    <th class="text-right" scope="col">Total<span>(+ IVA)</span></th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor='let item of orders| orderFilter: state | paginate: {itemsPerPage: 5, currentPage: p};let i = index'>
+
+                    <td><strong> {{ 5* (+p - 1) + i + 1 }}</strong></td>
+                    <td>DH-{{item.id}}</td>
+                    <td>{{item.startDate |date: 'dd-MM-yyyy'}}</td>
+                    <td>{{item.assignDate|date: 'dd-MM-yyyy'}}<span *ngIf='!item.assignDate' style="color:red">No asignado</span></td>
+                    <td>{{item.endDate|date: 'dd-MM-yyyy'}}<span *ngIf='!item.endDate' style="color:red">No entregado</span></td>
+                    <td>{{item.customer.name}}</td>
+                    <td>{{item.state.name}}</td>
+                    <td [ngStyle]="{'color':getColor(item.priority.name)}">{{item.priority.name}}</td>
+                    <td class="text-right">{{item.totalPvpIva| number:'1.2-2'}} <span *ngIf='item.totalPvpIva'>€</span>
+                        <span *ngIf='!item.totalPvpIva' style="color:red">No ítems</span></td>
+                    <td>
+                        <a [routerLink]="['/itemsOrder','employee', item.employeeId,item.id]"><i class="fa fa-info-circle mr-2 ml-1" style="color:lightseagreen" data-toggle="tooltip" data-placement="bottom" title="Detalles pedido DH-{{item.id}}"></i></a>
+                        <a [routerLink]="['/editOrder','employee', item.employeeId, item.id]"><i class="fa fa-pencil mr-2" style="color:#4CAF50" data-toggle="tooltip" data-placement="bottom" title="Editar pedido DH-{{item.id}}"></i></a>
+                        <a [routerLink]="" (click)=deleteOrder(item.id)><i class="fa fa-trash" style="color:red" data-toggle="tooltip" data-placement="bottom" title="Borrar pedido DH-{{item.id}}"></i></a>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <pagination-controls class="pagination justify-content-center" (pageChange)="p = $event"></pagination-controls>
+</div>

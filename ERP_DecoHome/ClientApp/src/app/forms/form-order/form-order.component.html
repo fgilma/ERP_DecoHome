@@ -1,0 +1,72 @@
+<div class="container">
+    <div class="row pb-1">
+        <div class="col">
+            <form (ngSubmit)="saveOrder()" [formGroup]="orderForm">
+                <div class="card">
+                    <div class="card-header" style="background:#4b5366; color: #fff;">
+                        <h2>{{title}} <b> pedido</b></h2>
+                    </div>
+                    <div class="card-body pb-1">
+                        <div class="row">
+                            <div class="col-6">
+                                <h6><strong>Cliente: </strong><span>{{order.customer.name}}</span></h6>
+                            </div>
+                            <div class="col-2 ml-auto">
+                                <h6><strong>Total Pvp: </strong><span *ngIf='order.totalPvpIva'>{{order.totalPvpIva}} €</span></h6>
+                            </div>
+                        </div>
+                        <div class="form row">
+                            <div class="form-group col-6" *ngIf='isAdmin()'>
+                                <label for="EmployeeId">Empleado:</label>
+                                <select class="form-control" id="EmployeeId" formControlName="employeeId">
+                                            <option *ngFor='let item of employees' value="{{item.id}}">{{item.name}} {{item.surname1}} {{item.surname2}}</option>
+                                        </select>
+                            </div>
+                            <div class="form-group col-6 align-self-end" *ngIf='!isAdmin()'>
+                                <label for="EmployeeId2">Empleado:</label>
+                                <input type="text" class="ml-3 pl-2" id="EmployeeId2" placeholder="{{employeeName}}" readonly>
+                            </div>
+                            <div class="form-group  col-3">
+                                <label for="stateId">Estado:</label>
+                                <select class="form-control" id="stateId" formControlName="stateId">
+                                        <option *ngFor='let item of states' value="{{item.id}}">{{item.name}}</option>
+                                    </select>
+                            </div>
+                            <div class="form-group col-3">
+                                <label for="priorityId">Prioridad:</label>
+                                <select class="form-control" id="priorityId" formControlName="priorityId">
+                                        <option *ngFor='let item of priorities' value="{{item.id}}">{{item.name}}</option>
+                                    </select>
+                            </div>
+                        </div>
+
+                        <div class="form row">
+                            <div class="form-group col">
+                                <label for="startDate">Inicio</label>
+                                <input type="date" class="form-control" id="startDate" formControlName="startDate">
+                            </div>
+                            <div class="form-group col">
+                                <label for="assignDate">Asignación</label>
+                                <input type="date" class="form-control" id="assignDate" formControlName="assignDate">
+                            </div>
+                            <div class="form-group col">
+                                <label for="endDate">Final</label>
+                                <input type="date" class="form-control" id="endDate" formControlName="endDate">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row mb-2 mt-2">
+                    <div class="col-md-4">
+                        <button class="btn btn-light mr-3" style="width:80px;" type="submit">
+                        Save
+                        </button>
+                        <button class="btn btn-outline-secondary mr-3" style="width:80px;" type="button" title="Cancel your edits" (click)=onBack()><!--[routerLink]="['/orders']" queryParamsHandling="preserve">-->
+                        Cancel
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
