@@ -27,7 +27,7 @@ export class ItemsOrderService {
       );
     }
   // Post item
-  createItemsOrder(items: IOrderItem): Observable<any> {
+  createItemsOrder(items: IOrderItem): Observable<{}> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const url = `${this.itemsOrderUrl}/`;
     return this.http.post<IOrderItem>(url, items, { headers }).pipe(
@@ -35,6 +35,7 @@ export class ItemsOrderService {
                 catchError(this.handleError)
     );
   }
+
   // Put item
   updateItemsOrder(item: IOrderItem): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });

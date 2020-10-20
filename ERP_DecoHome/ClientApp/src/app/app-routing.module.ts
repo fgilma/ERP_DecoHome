@@ -17,6 +17,7 @@ import { FormCustomerComponent } from './forms/form-customer/form-customer.compo
 import { CustomerDetailComponent } from './components/customer-detail/customer-detail.component';
 import { FormEmployeeComponent } from './forms/form-employee/form-employee.component';
 import { EmployeeDetailComponent } from './components/employee-detail/employee-detail.component';
+import { ItemsOrderResolverService } from './services/items-order-resolver.service';
 
 
 
@@ -31,8 +32,8 @@ const routes: Routes = [
   {path: 'createItem/:option/:option1/:orderId/:id', component: FormItemComponent },
   {path: 'editItem/:option/:orderId/:id', component: FormItemComponent },
   {path: 'editItem/:option/:option1/:orderId/:id', component: FormItemComponent },
-  {path: 'itemsOrder/:option/:id', component: ItemsOrderComponent},
-  {path: 'itemsOrder/:option/:option1/:id', component: ItemsOrderComponent },
+  {path: 'itemsOrder/:option/:id', component: ItemsOrderComponent, resolve: { resolvedData: ItemsOrderResolverService }},
+  {path: 'itemsOrder/:option/:option1/:id', component: ItemsOrderComponent, resolve: { resolvedData: ItemsOrderResolverService } },
   {path: 'products', component: ProductsComponent},
   {path: 'editProduct/:id', component: FormProductComponent },
   {path: 'createProduct', component: FormProductComponent },

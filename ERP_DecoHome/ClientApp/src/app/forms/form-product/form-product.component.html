@@ -11,10 +11,20 @@
                             <div class="form-group col">
                                 <label for="name">Nombre</label>
                                 <input type="text" name="" id="name" class="form-control" formControlName="name" placeholder="" aria-describedby="helpId">
+                                <div *ngIf="productForm.controls['name'].invalid && (productForm.controls['name'].dirty || productForm.controls['name'].touched)">
+                                    <span *ngIf="productForm.controls['name'].errors.required" style="color:red">
+                                           <small> El nombre del producto es necesario.</small>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group col-2">
                                 <label for="amount">Stock</label>
                                 <input type="text" name="" id="amount" class="form-control" formControlName="amount" placeholder="" aria-describedby="helpId">
+                                <div *ngIf="productForm.controls['amount'].invalid && (productForm.controls['amount'].dirty || productForm.controls['amount'].touched)">
+                                    <span *ngIf="productForm.controls['amount'].errors.required" style="color:red">
+                                           <small> La cantidad es necesaria.</small>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-row">
@@ -23,16 +33,31 @@
                                 <select class="form-control" id="category" formControlName="categoryId">
                                     <option *ngFor='let item of categories' value="{{item.id}}">{{item.name}}</option>
                                 </select>
+                                <div *ngIf="productForm.controls['categoryId'].invalid && (productForm.controls['categoryId'].dirty || productForm.controls['categoryId'].touched)">
+                                    <span *ngIf="productForm.controls['categoryId'].errors.required" style="color:red">
+                                           <small> La categoría es necesaria.</small>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group offset-2 col-3">
                                 <label for="cost">Coste</label>
                                 <input type="text" name="" id="cost" class="form-control" formControlName="cost" placeholder="" aria-describedby="helpId">
+                                <div *ngIf="productForm.controls['cost'].invalid && (productForm.controls['cost'].dirty || productForm.controls['cost'].touched)">
+                                    <span *ngIf="productForm.controls['cost'].errors.required" style="color:red">
+                                           <small> El coste es necesario.</small>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group  col-2">
                                 <label for="unitPvp">PVP</label>
                                 <input type="text" name="" id="unitPvp" class="form-control" formControlName="unitPvp" placeholder="" aria-describedby="helpId">
+                                <div *ngIf="productForm.controls['unitPvp'].invalid && (productForm.controls['unitPvp'].dirty || productForm.controls['unitPvp'].touched)">
+                                    <span *ngIf="productForm.controls['unitPvp'].errors.required" style="color:red">
+                                           <small> El pvp es necesario.</small>
+                                    </span>
+                                </div>
                             </div>
                             <div class="form-group offset-3 col-2">
                                 <label for="iva">IVA<span class="small">(%)</span></label>
@@ -41,13 +66,18 @@
                             <div class="form-group offset-3 col-2">
                                 <label for="unitPvpIva">PVP<span class="small">(+IVA)</span></label>
                                 <input type="text" name="" id="unitPvpIva" class="form-control" formControlName="unitPvpIva" placeholder="" aria-describedby="helpId">
+                                <div *ngIf="productForm.controls['unitPvpIva'].invalid && (productForm.controls['unitPvpIva'].dirty || productForm.controls['unitPvpIva'].touched)">
+                                    <span *ngIf="productForm.controls['unitPvpIva'].errors.required" style="color:red">
+                                           <small> El pvp más IVA es necesario.</small>
+                                    </span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row mb-2 mt-2">
                     <div class="row md-3 ml-3">
-                        <button class="btn btn-light mr-3" style="width:80px;" type="submit">
+                        <button class="btn btn-light mr-3" style="width:80px;" type="submit" [disabled]="productForm.invalid">
                         Save
                         </button>
                         <button class="btn btn-outline-secondary mr-2" style="width:80px;" type="button" title="Cancel your edits" [routerLink]="['/products']">

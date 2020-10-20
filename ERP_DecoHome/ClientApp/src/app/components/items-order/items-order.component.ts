@@ -14,14 +14,14 @@ import { IOrder } from '../../interfaces/iorder';
 export class ItemsOrderComponent implements OnInit {
 
   p = 1;
-  items = [];
+  items: IOrderItem[];
   error: string;
   order: IOrder;
   total: number;
   nameCustomer: string;
   numberOrder: number;
-  optionRoute: any;
-  option1: any;
+  optionRoute: string;
+  option1: string;
 
   constructor(private itemsOrderService: ItemsOrderService,
               private http: HttpClient,
@@ -45,11 +45,9 @@ export class ItemsOrderComponent implements OnInit {
       next: (response) => this.total = response[2],
       error: err => this.error = err
     });
-    // get items order
-    this.itemsOrderService.getItemsOrder(orderId).subscribe({
-                  next: response => this.items = response,
-                  error: err => this.error = err}
-                  );
+    // use resolve route to get items order
+    const resolvedData: IOrderItem[] = this.route.snapshot.data.resolvedData;
+    this.items = resolvedData;
   }
 
 
@@ -92,6 +90,7 @@ export class ItemsOrderComponent implements OnInit {
       next: response => this.items = response,
       error: err => this.error = err
     });
+
   }
 
   // Go to create more items saving the origin on the url

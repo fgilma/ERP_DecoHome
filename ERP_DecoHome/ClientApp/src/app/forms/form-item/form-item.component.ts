@@ -9,7 +9,7 @@ import { ICategory } from '../../interfaces/icategory';
 import { IProduct } from '../../interfaces/iproduct';
 import { IOrderItem } from '../../interfaces/iorder-item';
 import { IOrder } from '../../interfaces/iorder';
-import { of, Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-form-item',
@@ -152,35 +152,40 @@ export class FormItemComponent implements OnInit {
     // Get order item belongs
     const orderId = +this.route.snapshot.paramMap.get('orderId');
     this.orderService.getOrderById(orderId).subscribe({
-                    next: (response: IOrder) => this.order = response,
+                    next: (response: IOrder) => {
+                      this.order = response;
+                      this.itemsOrderService.getTotal(orderId).subscribe({
+                                        next: (response2: number[]) => {
+                                          this.order.totalCost = response2[0];
+                                          this.order.totalPvp = response2[1];
+                                          this.order.totalPvpIva = response2[2];
+                                          this.orderService.updateOrder(this.order).subscribe({
+                                                        next: () => this.onSaveComplete(),
+                                                        error: err => this.error = err
+                                                    });
+                                        },
+                                        error: err => this.error = err
+                                      });
+                    },
                     error: err => this.error = err
               });
-    // Update total values of order
-    this.itemsOrderService.getTotal(orderId).subscribe({
-      next: (response2: number[]) => {
-        this.order.totalCost = response2[0];
-        this.order.totalPvp = response2[1];
-        this.order.totalPvpIva = response2[2];
-        this.orderService.updateOrder(this.order).subscribe({
-                              next: () => {
-            return this.onSaveComplete();
-          },
-                              error: err => this.error = err
-
-                      });
-        }
-    });
   }
 
 // create items and update new order with totals
 saveCart(): void{
+  console.log('aqui empieza savecart');
   // post items from cart on database
+  let j = 0;
   for (const i of this.newItems){
     this.itemsOrderService.createItemsOrder(i).subscribe({
          next: response => console.log(response),
-        error: err => this.error = err
+         error: err => this.error = err,
+         complete: () => {
+          j = j + 1;
+          if (j === this.newItems.length) {this.onSaveComplete(); } }
       });
    }
+
    // update new order with totals
   const orderId = +this.route.snapshot.paramMap.get('orderId');
   this.orderService.getOrderById(orderId).subscribe({
@@ -190,13 +195,13 @@ saveCart(): void{
                   this.order.totalPvp = this.totalPvp;
                   this.order.totalPvpIva = this.totalPvpIva;
                   this.orderService.updateOrder(this.order).subscribe({
-                          next: (response3) => console.log('que saldra', response3),
+                          next: (response3) => console.log(response3),
                           error: err => this.error = err
                         });
           },
           error: err => this.error = err
   });
-  this.onSaveComplete();
+
 }
 
 // delete item from cart list
@@ -209,13 +214,12 @@ deleteItem(id: number): void{
 onSaveComplete(): void {
   // Reset the form to clear the flags
   const id = +this.route.snapshot.paramMap.get('id');
-  const orderId = +this.route.snapshot.paramMap.get('orderId');
   if (id === 0) {
     this.itemForm.reset();
     this.onBack();
   }
   else {
-    this.router.navigate(['/itemsOrder', 'order', orderId]);
+    this.onBack();
   }
 
 }

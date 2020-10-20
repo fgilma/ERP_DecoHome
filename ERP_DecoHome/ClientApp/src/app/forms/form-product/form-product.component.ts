@@ -32,13 +32,13 @@ export class FormProductComponent implements OnInit {
     });
     // product form
     this.productForm = this.fb.group ({
-      name: ['', [Validators.required]],
-      categoryId: [''],
-      amount: [''],
-      cost: [''],
+      name: ['', Validators.required],
+      categoryId: ['', Validators.required],
+      amount: ['', Validators.required],
+      cost: ['', Validators.required],
       iva: ['21'],
-      unitPvp: [''],
-      unitPvpIva: ['']
+      unitPvp: ['', Validators.required],
+      unitPvpIva: ['', Validators.required]
     });
 
     // Read the product Id from the route parameter
