@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using ERP_DecoHome.Data;
+using ERP_DecoHome.Models.Enums;
 using Newtonsoft.Json;
 
 namespace ERP_DecoHome.Models
@@ -13,8 +14,8 @@ namespace ERP_DecoHome.Models
     {
         [Key]        
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int CategoryId { get; set; }
+        public string Name { get; set; }        
+        public String Category { get; set; }
         public int Amount { get; set; }
         [Column(TypeName = "decimal(18,2)")]
         public decimal Cost { get; set; }
@@ -25,6 +26,6 @@ namespace ERP_DecoHome.Models
 
         [JsonIgnore]
         public virtual List<DetailedOrder> DetailedOrders { get; set; }
-        public virtual Category Category { get; set; }
+       
     }
 }

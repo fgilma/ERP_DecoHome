@@ -18,8 +18,7 @@ namespace ERP_DecoHome.Data
 
         public DetailedOrder GetDetailedOrders(int id)
         {
-            return _context.DetailedOrders.Include(p => p.Product)
-                                        .ThenInclude(c => c.Category)
+            return _context.DetailedOrders.Include(p => p.Product)                                        
                                         .AsNoTracking()
                                         .FirstOrDefault(m => m.Id == id);
         }
@@ -39,8 +38,7 @@ namespace ERP_DecoHome.Data
         public IEnumerable<DetailedOrder> GetItemsByOrderId(int id)
         {
             return _context.DetailedOrders.Where(p => p.OrderId == id).Include(p => p.Product)
-                .ThenInclude(c => c.Category)
-                .ToList();
+                                          .ToList();
         }
 
         // Sales group by products 

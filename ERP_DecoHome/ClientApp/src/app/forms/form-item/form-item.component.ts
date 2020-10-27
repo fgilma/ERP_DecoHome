@@ -17,7 +17,7 @@ import { IOrder } from '../../interfaces/iorder';
   styleUrls: ['./form-item.component.css']
 })
 export class FormItemComponent implements OnInit {
-  categories: ICategory[];
+  categories: string[];
   products: IProduct[];
   error: string;
   itemForm: FormGroup;
@@ -37,14 +37,14 @@ export class FormItemComponent implements OnInit {
               private fb: FormBuilder,
               private router: Router,
               private itemsOrderService: ItemsOrderService,
-              private categoryService: CategoryService,
+              // private categoryService: CategoryService,
               private productService: ProductService,
               private orderService: OrderService) { }
 
   ngOnInit(): void {
     // Get categories to search items
-    this.categoryService.getCategories().subscribe({
-      next: (response: ICategory[]) => this.categories = response,
+    this.productService.getCategories().subscribe({
+      next: (response: string[]) => this.categories = response,
       error: err => this.error = err
     });
 
@@ -59,7 +59,7 @@ export class FormItemComponent implements OnInit {
       name: [''],
       amount: ['', Validators.required],
       category: [''],
-      categoryId: [''],
+     // categoryId: [''],
       productId: ['', Validators.required]
     });
 
@@ -90,7 +90,7 @@ export class FormItemComponent implements OnInit {
                                           this.itemForm.patchValue({
                                                 productId: this.item.product.id,
                                                 amount: this.item.amount,
-                                                category: this.item.product.category.name
+                                                category: this.item.product.category
                                           });
                                         },
         error: err => this.error = err

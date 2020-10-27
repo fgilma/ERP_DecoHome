@@ -12,13 +12,13 @@ import { IProduct } from '../../interfaces/iproduct';
   styleUrls: ['./form-product.component.css']
 })
 export class FormProductComponent implements OnInit {
-  categories: ICategory[];
+  categories: string[];
   error: string;
   productForm: FormGroup;
   title: string;
   product: IProduct;
 
-  constructor(private categoryService: CategoryService,
+  constructor(// private categoryService: CategoryService,
               private productService: ProductService,
               private router: Router,
               private route: ActivatedRoute,
@@ -26,14 +26,14 @@ export class FormProductComponent implements OnInit {
 
   ngOnInit(): void {
     // get categories
-    this.categoryService.getCategories().subscribe({
+    this.productService.getCategories().subscribe({
       next: response => this.categories = response,
       error: err => this.error = err
     });
     // product form
     this.productForm = this.fb.group ({
       name: ['', Validators.required],
-      categoryId: ['', Validators.required],
+      category: ['', Validators.required],
       amount: ['', Validators.required],
       cost: ['', Validators.required],
       iva: ['21'],
@@ -53,7 +53,7 @@ export class FormProductComponent implements OnInit {
                       // Update the data on the form
                       this.productForm.patchValue({
                           name: this.product.name,
-                          categoryId: this.product.categoryId,
+                          category: this.product.category,
                           amount: this.product.amount,
                           cost: this.product.cost,
                           unitPvp: this.product.unitPvp,

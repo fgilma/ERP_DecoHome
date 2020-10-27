@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ERP_DecoHome.Models.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ namespace ERP_DecoHome.Models
         {
         }
 
-        public virtual DbSet<Category> Categories { get; set; }
+        // public virtual DbSet<Category2> Categories { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Priority> Priorities { get; set; }
         public virtual DbSet<State> States { get; set; }
@@ -27,7 +28,7 @@ namespace ERP_DecoHome.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // save db table names in singular and seed data
-            modelBuilder.Entity<Category>().ToTable("Category");
+            // modelBuilder.Entity<Category2>().ToTable("Category");
             modelBuilder.Entity<Product>().ToTable("Product");
             modelBuilder.Entity<Priority>().ToTable("Priority");
             modelBuilder.Entity<State>().ToTable("State");
@@ -37,32 +38,32 @@ namespace ERP_DecoHome.Models
 
             base.OnModelCreating(modelBuilder);
             // Category
-            modelBuilder.Entity<Category>()
+            /*modelBuilder.Entity<Category2>()
                 .HasData(
-                    new Category() { Id = 1, Name = "Camas" },
-                    new Category() { Id = 2, Name = "Armarios" },
-                    new Category() { Id = 3, Name = "Sofás" },
-                    new Category() { Id = 4, Name = "Estanterías" },
-                    new Category() { Id = 5, Name = "Mesas" }
-                );
+                    new Category2() { Id = 1, Name = "Camas" },
+                    new Category2() { Id = 2, Name = "Armarios" },
+                    new Category2() { Id = 3, Name = "Sofás" },
+                    new Category2() { Id = 4, Name = "Estanterías" },
+                    new Category2() { Id = 5, Name = "Mesas" }
+                );*/
             // Product
             modelBuilder.Entity<Product>()
                 .HasData(
-                    new Product() { Id = 1, Name = "Cama nido", CategoryId = 1, Amount = 100, Cost = 185.00M, UnitPvp = 240.50M, UnitPvpIva = 291.00M },
-                    new Product() { Id = 2, Name = "Cama apilable", CategoryId = 1, Amount = 9, Cost = 85.00M, UnitPvp = 110.50M, UnitPvpIva = 133.71M },
-                    new Product() { Id = 3, Name = "Colchón espuma", CategoryId = 1, Amount = 100, Cost = 45, UnitPvp = 58.50M, UnitPvpIva = 70.79M },
-                    new Product() { Id = 4, Name = "Armario con puertas correderas", CategoryId = 2, Amount = 100, Cost = 75, UnitPvp = 97.5M, UnitPvpIva = 117.97M },
-                    new Product() { Id = 5, Name = "Armario abierto", CategoryId = 2, Amount = 35, Cost = 105, UnitPvp = 136.5M, UnitPvpIva = 165.17M },
-                    new Product() { Id = 6, Name = "Combinación armario", CategoryId = 2, Amount = 6, Cost = 375, UnitPvp = 487.50M, UnitPvpIva = 589.87M },
-                    new Product() { Id = 7, Name = "Sofá 2 plazas", CategoryId = 3, Amount = 50, Cost = 390, UnitPvp = 507, UnitPvpIva = 613.47M },
-                    new Product() { Id = 8, Name = "Sofá 3 plazas", CategoryId = 3, Amount = 100, Cost = 790, UnitPvp = 1027, UnitPvpIva = 1242.67M },
-                    new Product() { Id = 9, Name = "Sofá cama 3 plazas", CategoryId = 3, Amount = 75, Cost = 850, UnitPvp = 1105, UnitPvpIva = 1337.05M },
-                    new Product() { Id = 10, Name = "Estantería de cubos", CategoryId = 4, Amount = 100, Cost = 50, UnitPvp = 65, UnitPvpIva = 78.65M },
-                    new Product() { Id = 11, Name = "Estantería de pared", CategoryId = 4, Amount = 80, Cost = 30, UnitPvp = 39, UnitPvpIva = 47.19M },
-                    new Product() { Id = 12, Name = "Estantería con puertas", CategoryId = 4, Amount = 100, Cost = 25, UnitPvp = 32.50M, UnitPvpIva = 39.32M },
-                    new Product() { Id = 13, Name = "Mesa de jardín", CategoryId = 5, Amount = 40, Cost = 19, UnitPvp = 24.70M, UnitPvpIva = 29.89M },
-                    new Product() { Id = 14, Name = "Mesa de despacho", CategoryId = 5, Amount = 3, Cost = 190, UnitPvp = 247, UnitPvpIva = 298.87M },
-                    new Product() { Id = 15, Name = "Mesa de cocina", CategoryId = 5, Amount = 100, Cost = 110, UnitPvp = 143, UnitPvpIva = 173.03M }
+                    new Product() { Id = 1, Name = "Cama nido", Category = Category.Camas.ToString(), Amount = 100, Cost = 185.00M, UnitPvp = 240.50M, UnitPvpIva = 291.00M },
+                    new Product() { Id = 2, Name = "Cama apilable", Category = Category.Camas.ToString(), Amount = 9, Cost = 85.00M, UnitPvp = 110.50M, UnitPvpIva = 133.71M },
+                    new Product() { Id = 3, Name = "Colchón espuma", Category = Category.Camas.ToString(), Amount = 100, Cost = 45, UnitPvp = 58.50M, UnitPvpIva = 70.79M },
+                    new Product() { Id = 4, Name = "Armario con puertas correderas", Category = Category.Armarios.ToString(), Amount = 100, Cost = 75, UnitPvp = 97.5M, UnitPvpIva = 117.97M },
+                    new Product() { Id = 5, Name = "Armario abierto", Category = Category.Armarios.ToString(), Amount = 35, Cost = 105, UnitPvp = 136.5M, UnitPvpIva = 165.17M },
+                    new Product() { Id = 6, Name = "Combinación armario", Category = Category.Armarios.ToString(), Amount = 6, Cost = 375, UnitPvp = 487.50M, UnitPvpIva = 589.87M },
+                    new Product() { Id = 7, Name = "Sofá 2 plazas", Category = Category.Sofás.ToString(), Amount = 50, Cost = 390, UnitPvp = 507, UnitPvpIva = 613.47M },
+                    new Product() { Id = 8, Name = "Sofá 3 plazas", Category = Category.Sofás.ToString(), Amount = 100, Cost = 790, UnitPvp = 1027, UnitPvpIva = 1242.67M },
+                    new Product() { Id = 9, Name = "Sofá cama 3 plazas", Category = Category.Sofás.ToString(), Amount = 75, Cost = 850, UnitPvp = 1105, UnitPvpIva = 1337.05M },
+                    new Product() { Id = 10, Name = "Estantería de cubos", Category = Category.Estanterías.ToString(), Amount = 100, Cost = 50, UnitPvp = 65, UnitPvpIva = 78.65M },
+                    new Product() { Id = 11, Name = "Estantería de pared", Category = Category.Estanterías.ToString(), Amount = 80, Cost = 30, UnitPvp = 39, UnitPvpIva = 47.19M },
+                    new Product() { Id = 12, Name = "Estantería con puertas", Category = Category.Estanterías.ToString(), Amount = 100, Cost = 25, UnitPvp = 32.50M, UnitPvpIva = 39.32M },
+                    new Product() { Id = 13, Name = "Mesa de jardín", Category = Category.Mesas.ToString(), Amount = 40, Cost = 19, UnitPvp = 24.70M, UnitPvpIva = 29.89M },
+                    new Product() { Id = 14, Name = "Mesa de despacho", Category = Category.Mesas.ToString(), Amount = 3, Cost = 190, UnitPvp = 247, UnitPvpIva = 298.87M },
+                    new Product() { Id = 15, Name = "Mesa de cocina", Category = Category.Mesas.ToString(), Amount = 100, Cost = 110, UnitPvp = 143, UnitPvpIva = 173.03M }
                 );
             // Customer
             modelBuilder.Entity<Customer>()

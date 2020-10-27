@@ -37,7 +37,6 @@ namespace ERP_DecoHome
             // Repositories
             services.AddScoped<StateRepository>();
             services.AddScoped<PriorityRepository>();
-            services.AddScoped<CategoryRepository>();
             services.AddScoped<ProductRepository>();
             services.AddScoped<CustomerRepository>();
             services.AddScoped<DetailedOrderRepository>();

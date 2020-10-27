@@ -37,7 +37,7 @@
                     <td><strong> {{ 5* (+p - 1) + i + 1 }}</strong></td>
                     <td>DHP-{{product.id}}</td>
                     <td>{{product.name}}</td>
-                    <td>{{product.category.name}}</td>
+                    <td>{{product.category}}</td>
                     <td class="text-right" [ngStyle]="{'color': getColor(product.amount)}">{{product.amount}}</td>
                     <td class="text-right">{{product.cost| number:'1.2-2'}} €</td>
                     <td class="text-right">{{product.unitPvp| number:'1.2-2'}} €</td>

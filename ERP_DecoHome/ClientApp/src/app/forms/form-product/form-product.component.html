@@ -30,11 +30,11 @@
                         <div class="form-row">
                             <div class="form-group col-5">
                                 <label for="category">Categoría</label>
-                                <select class="form-control" id="category" formControlName="categoryId">
-                                    <option *ngFor='let item of categories' value="{{item.id}}">{{item.name}}</option>
+                                <select class="form-control" id="category" formControlName="category">
+                                    <option *ngFor='let item of categories' value="{{item}}">{{item}}</option>
                                 </select>
-                                <div *ngIf="productForm.controls['categoryId'].invalid && (productForm.controls['categoryId'].dirty || productForm.controls['categoryId'].touched)">
-                                    <span *ngIf="productForm.controls['categoryId'].errors.required" style="color:red">
+                                <div *ngIf="productForm.controls['category'].invalid && (productForm.controls['category'].dirty || productForm.controls['category'].touched)">
+                                    <span *ngIf="productForm.controls['category'].errors.required" style="color:red">
                                            <small> La categoría es necesaria.</small>
                                     </span>
                                 </div>

@@ -14,9 +14,11 @@ namespace ERP_DecoHome.Data
         {
             _context = context;
         }
-        public IEnumerable<Product> GetProducts()
+        public IEnumerable<string> GetCategories()
         {
-            return _context.Products.Include(c => c.Category).ToList();
+            var query= _context.Products.Select(p => p.Category)
+                                  .Distinct();
+            return query.ToList();
         }
     }
 }

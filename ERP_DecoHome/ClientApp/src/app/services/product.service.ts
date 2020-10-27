@@ -14,7 +14,15 @@ export class ProductService {
 
   // Get products
   getProducts(): Observable<IProduct[]> {
-    return this.http.get<IProduct>(`${this.productUrl}/GetProducts`).pipe(
+    return this.http.get<IProduct>(`${this.productUrl}`).pipe(
+                tap((data: any) => console.log('All: ' + JSON.stringify(data)),
+                catchError(this.handleError))
+    );
+  }
+
+  // Get categories
+  getCategories(): Observable<string[]> {
+    return this.http.get<IProduct>(`${this.productUrl}/getCategories`).pipe(
                 tap((data: any) => console.log('All: ' + JSON.stringify(data)),
                 catchError(this.handleError))
     );

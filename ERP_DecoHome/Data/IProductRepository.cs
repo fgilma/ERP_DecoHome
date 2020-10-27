@@ -8,6 +8,6 @@ namespace ERP_DecoHome.Data
 {
     public interface IProductRepository
     {
-        public IEnumerable<Product> GetProducts();
+        public IEnumerable<string> GetCategories();
     }
 }

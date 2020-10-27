@@ -23,10 +23,10 @@ namespace ERP_DecoHome.Controllers
         }
 
         // GET: api/Products
-        [HttpGet("GetProducts")]
-        public ActionResult<IEnumerable<Product>> GetProducts()
+        [HttpGet("GetCategories")]
+        public ActionResult<IEnumerable<string>> GetCategories()
         {
-            var result = _repository.GetProducts(); // include categories
+            var result = _repository.GetCategories(); 
             return Ok(result);
         }
     }

@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ERP_DecoHome.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201002083254_Inicio")]
-    partial class Inicio
+    [Migration("20201026163158_inicio")]
+    partial class inicio
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,48 +20,6 @@ namespace ERP_DecoHome.Migrations
                 .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("ERP_DecoHome.Models.Category", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Category");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Camas"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Armarios"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Sofás"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Estanterías"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Mesas"
-                        });
-                });
 
             modelBuilder.Entity("ERP_DecoHome.Models.Customer", b =>
                 {
@@ -342,7 +300,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = "a18be9c0-aa65-4af8-bd17-00bd9344e575",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d77c1a69-56fe-4192-905c-6ed15153cd1b",
+                            ConcurrencyStamp = "25d71815-1fe7-48e3-91b0-587e43f5739d",
                             Department = "Ventas",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
@@ -351,12 +309,12 @@ namespace ERP_DecoHome.Migrations
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
                             Password = "Admin100#",
-                            PasswordHash = "AQAAAAEAACcQAAAAEMZQKDgbWnopojCWF/cC+m3fykPYL+UP4oI1qK+Xg4db42mwjOznA1CNTNYGkSRGnA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEPxhzKnUJ0LMP5wH1mj10TYhjgnyrVd0z8OLgoHzy12k0izhXjNCO9PuLGSo2c8taw==",
                             PhoneNumberConfirmed = false,
                             Position = "Jefe de ventas",
                             Rol = "Administrador",
                             Salary = 45000.00m,
-                            SecurityStamp = "b83e4cc2-2548-48fc-abc2-da8f0875fece",
+                            SecurityStamp = "fe6f14d0-ae6f-43c2-87ac-21e1dc786c40",
                             Surname1 = "García",
                             Surname2 = "Pérez",
                             TwoFactorEnabled = false,
@@ -496,8 +454,8 @@ namespace ERP_DecoHome.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("int");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Cost")
                         .HasColumnType("decimal(18,2)");
@@ -513,8 +471,6 @@ namespace ERP_DecoHome.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.ToTable("Product");
 
                     b.HasData(
@@ -522,7 +478,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 1,
                             Amount = 100,
-                            CategoryId = 1,
+                            Category = "Camas",
                             Cost = 185.00m,
                             Name = "Cama nido",
                             UnitPvp = 240.50m,
@@ -532,7 +488,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 2,
                             Amount = 9,
-                            CategoryId = 1,
+                            Category = "Camas",
                             Cost = 85.00m,
                             Name = "Cama apilable",
                             UnitPvp = 110.50m,
@@ -542,7 +498,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 3,
                             Amount = 100,
-                            CategoryId = 1,
+                            Category = "Camas",
                             Cost = 45m,
                             Name = "Colchón espuma",
                             UnitPvp = 58.50m,
@@ -552,7 +508,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 4,
                             Amount = 100,
-                            CategoryId = 2,
+                            Category = "Armarios",
                             Cost = 75m,
                             Name = "Armario con puertas correderas",
                             UnitPvp = 97.5m,
@@ -562,7 +518,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 5,
                             Amount = 35,
-                            CategoryId = 2,
+                            Category = "Armarios",
                             Cost = 105m,
                             Name = "Armario abierto",
                             UnitPvp = 136.5m,
@@ -572,7 +528,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 6,
                             Amount = 6,
-                            CategoryId = 2,
+                            Category = "Armarios",
                             Cost = 375m,
                             Name = "Combinación armario",
                             UnitPvp = 487.50m,
@@ -582,7 +538,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 7,
                             Amount = 50,
-                            CategoryId = 3,
+                            Category = "Sofás",
                             Cost = 390m,
                             Name = "Sofá 2 plazas",
                             UnitPvp = 507m,
@@ -592,7 +548,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 8,
                             Amount = 100,
-                            CategoryId = 3,
+                            Category = "Sofás",
                             Cost = 790m,
                             Name = "Sofá 3 plazas",
                             UnitPvp = 1027m,
@@ -602,7 +558,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 9,
                             Amount = 75,
-                            CategoryId = 3,
+                            Category = "Sofás",
                             Cost = 850m,
                             Name = "Sofá cama 3 plazas",
                             UnitPvp = 1105m,
@@ -612,7 +568,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 10,
                             Amount = 100,
-                            CategoryId = 4,
+                            Category = "Estanterías",
                             Cost = 50m,
                             Name = "Estantería de cubos",
                             UnitPvp = 65m,
@@ -622,7 +578,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 11,
                             Amount = 80,
-                            CategoryId = 4,
+                            Category = "Estanterías",
                             Cost = 30m,
                             Name = "Estantería de pared",
                             UnitPvp = 39m,
@@ -632,7 +588,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 12,
                             Amount = 100,
-                            CategoryId = 4,
+                            Category = "Estanterías",
                             Cost = 25m,
                             Name = "Estantería con puertas",
                             UnitPvp = 32.50m,
@@ -642,7 +598,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 13,
                             Amount = 40,
-                            CategoryId = 5,
+                            Category = "Mesas",
                             Cost = 19m,
                             Name = "Mesa de jardín",
                             UnitPvp = 24.70m,
@@ -652,7 +608,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 14,
                             Amount = 3,
-                            CategoryId = 5,
+                            Category = "Mesas",
                             Cost = 190m,
                             Name = "Mesa de despacho",
                             UnitPvp = 247m,
@@ -662,7 +618,7 @@ namespace ERP_DecoHome.Migrations
                         {
                             Id = 15,
                             Amount = 100,
-                            CategoryId = 5,
+                            Category = "Mesas",
                             Cost = 110m,
                             Name = "Mesa de cocina",
                             UnitPvp = 143m,
@@ -875,15 +831,6 @@ namespace ERP_DecoHome.Migrations
                     b.HasOne("ERP_DecoHome.Models.State", "State")
                         .WithMany("Orders")
                         .HasForeignKey("StateId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ERP_DecoHome.Models.Product", b =>
-                {
-                    b.HasOne("ERP_DecoHome.Models.Category", "Category")
-                        .WithMany("Products")
-                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

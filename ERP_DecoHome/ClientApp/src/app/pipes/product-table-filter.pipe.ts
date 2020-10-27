@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class ProductTableFilterPipe implements PipeTransform {
   // filter products by category
   transform(list: any[], value: string): any {
-    return value ? list.filter(item => item.category.name === value) : list;
+    return value ? list.filter(item => item.category === value) : list;
   }
 
 }
